@@ -1,0 +1,11 @@
+# node (frontend)
+frontend/node_modules
+frontend/dist
+
+# java (backend)
+backend/target
+backend/.idea
+backend/*.log
+
+# General
+.env
