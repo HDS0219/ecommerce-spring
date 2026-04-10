@@ -28,6 +28,7 @@ public class ProductMapper {
                 .createdAt(product.getCreatedAt())
                 .status(product.getStatus())
                 .category(product.getCategory())
+                .image(product.getImage())
                 .build();
     }
 }

@@ -25,4 +25,5 @@ public class ProductResponseDto implements Serializable {
     private LocalDateTime createdAt;
     private ProductStatus status;
     private ProductCategory category;
+    private String image;
 }

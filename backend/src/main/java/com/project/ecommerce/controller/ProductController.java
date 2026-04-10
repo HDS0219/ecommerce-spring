@@ -1,8 +1,13 @@
 package com.project.ecommerce.controller;
 
-import com.project.ecommerce.product.mapper.ProductMapper;
-import com.project.ecommerce.service.ProductService;
+import com.project.ecommerce.product.ProductService;
+import com.project.ecommerce.product.dto.ProductRequestDto;
+import com.project.ecommerce.product.dto.ProductResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductMapper productMapper;
 
+    @PostMapping
+    public ResponseEntity<ProductResponseDto> createProduct(
+            @RequestBody @Valid ProductRequestDto dto
+    ) {
+        return ResponseEntity.ok(productService.createProduct(dto));
+    }
 }
