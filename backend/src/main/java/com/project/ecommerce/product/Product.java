@@ -33,7 +33,7 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-
+    
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
@@ -46,6 +46,11 @@ public class Product {
 
     @Column(name = "image_url")
     private String image;
+
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 
 }

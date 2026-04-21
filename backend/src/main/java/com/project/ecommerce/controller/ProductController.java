@@ -3,7 +3,6 @@ package com.project.ecommerce.controller;
 import com.project.ecommerce.product.ProductService;
 import com.project.ecommerce.product.dto.ProductRequestDto;
 import com.project.ecommerce.product.dto.ProductResponseDto;
-import com.project.ecommerce.repository.ProductRepository;
 import com.project.ecommerce.response.ResponsePage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,17 +27,19 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(dto));
     }
 
-    // Get product by Id
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDto> getById(@PathVariable UUID id){
-        return ResponseEntity.ok(productService.getById(id));
+    // Get product by name
+    @GetMapping("/search")
+    public ResponseEntity<ProductResponseDto> getByName(@RequestParam String name){
+        return ResponseEntity.ok(productService.getByName(name));
     }
 
     // Get all products
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<ResponsePage<ProductResponseDto>> getAllProducts(Pageable pageable){
         return ResponseEntity.ok(
             productService.getAllProducts(pageable)
         );
     }
+
+
 }

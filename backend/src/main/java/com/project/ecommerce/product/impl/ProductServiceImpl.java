@@ -8,7 +8,7 @@ import com.project.ecommerce.product.dto.ProductResponseDto;
 import com.project.ecommerce.product.mapper.ProductMapper;
 import com.project.ecommerce.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -33,11 +33,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponseDto getById(UUID id) {
-        Product product = productRepository.findById(id)
+    public ProductResponseDto getByName(String name) {
+        Product product = productRepository.findFirstByName(name)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found."));
+
         return ProductMapper.toResponse(product);
     }
+
+
+
 
     @Override
     public ResponsePage<ProductResponseDto> getAllProducts(Pageable pageable) {
@@ -58,4 +62,11 @@ public class ProductServiceImpl implements ProductService {
                 .build();
     }
 
+    // WIP
+    @Override
+    public ProductResponseDto updateProduct(ProductResponseDto dto, UUID id) {
+        return productRepository.findById(id).map(product -> {
+            //
+        });
+    }
 }
