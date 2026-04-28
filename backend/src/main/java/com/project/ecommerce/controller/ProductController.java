@@ -1,6 +1,7 @@
 package com.project.ecommerce.controller;
 
 import com.project.ecommerce.product.ProductService;
+import com.project.ecommerce.product.dto.ProductPatchDto;
 import com.project.ecommerce.product.dto.ProductRequestDto;
 import com.project.ecommerce.product.dto.ProductResponseDto;
 import com.project.ecommerce.response.ResponsePage;
@@ -40,6 +41,24 @@ public class ProductController {
             productService.getAllProducts(pageable)
         );
     }
+
+    // Update product
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponseDto> updateProduct(
+            @PathVariable UUID id,
+            @RequestBody @Valid ProductRequestDto dto
+    ) {
+        return ResponseEntity.ok(productService.updateProduct(id, dto));
+    }
+
+    // Update partially a product
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductResponseDto> patchProduct(
+            @PathVariable UUID id,
+            @Valid @RequestBody ProductPatchDto patchDto) {
+        return ResponseEntity.ok(productService.patchProduct(id, patchDto));
+    }
+
 
 
 }

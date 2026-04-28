@@ -2,37 +2,17 @@ package com.project.ecommerce.product.dto;
 
 import com.project.ecommerce.product.ProductCategory;
 import com.project.ecommerce.product.ProductStatus;
-import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductRequestDto {
-
-    @NotBlank
+public class ProductPatchDto{
     private String name;
-
     private String description;
-
-    @NotNull
-    @Positive
     private BigDecimal price;
-
-    @NotNull
-    @PositiveOrZero
     private Integer stock;
-
-    @NotNull
     private ProductCategory category;
-
-    @NotNull
     private ProductStatus status;
-
     private String image;
 }
-

@@ -1,8 +1,10 @@
 package com.project.ecommerce.product;
 
+import com.project.ecommerce.product.dto.ProductPatchDto;
 import com.project.ecommerce.product.dto.ProductRequestDto;
 import com.project.ecommerce.product.dto.ProductResponseDto;
 import com.project.ecommerce.response.ResponsePage;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
@@ -16,6 +18,8 @@ public interface ProductService {
 
     ResponsePage<ProductResponseDto> getAllProducts(Pageable pageable);
 
-    ProductResponseDto updateProduct(ProductResponseDto dto, UUID id);
+    ProductResponseDto updateProduct(UUID id, ProductRequestDto dto);
+
+    ProductResponseDto patchProduct(UUID id, ProductPatchDto dto);
 
 }
