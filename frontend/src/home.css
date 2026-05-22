@@ -1,0 +1,85 @@
+import { useEffect, useState } from 'react';
+import { productService } from '../services/productService';
+import { Product, ProductRequestDto } from '../types/product';
+
+export default function Products() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
+  useEffect(() => {
+    fetchProducts(page);
+  }, [page]);
+
+  async function fetchProducts(p: number) {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await productService.getAll(p);
+      setProducts(result.data);
+      setTotalPages(result.totalPages);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleCreate(dto: ProductRequestDto) {
+    try {
+      await productService.create(dto);
+      fetchProducts(page);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao criar produto');
+    }
+  }
+
+  async function handleUpdate(id: string, dto: ProductRequestDto) {
+    try {
+      await productService.update(id, dto);
+      fetchProducts(page);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao atualizar produto');
+    }
+  }
+
+  async function handleDelete(id: string) {
+    try {
+      await productService.delete(id);
+      fetchProducts(page);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao excluir produto');
+    }
+  }
+
+  if (loading) return <p>Carregando...</p>;
+  if (error)   return <p style={{ color: 'red' }}>{error}</p>;
+
+  return (
+    <div>
+      <h1>Produtos</h1>
+
+      {products.map(product => (
+        <div key={product.id}>
+          <span>{product.name}</span>
+          <span>R$ {product.price.toFixed(2)}</span>
+          <span>{product.status}</span>
+          <button onClick={() => handleDelete(product.id)}>Excluir</button>
+        </div>
+      ))}
+
+      {/* Paginação */}
+      <div>
+        <button disabled={page === 0} onClick={() => setPage(p => p - 1)}>
+          Anterior
+        </button>
+        <span>{page + 1} / {totalPages}</span>
+        <button disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>
+          Próxima
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -22,4 +22,6 @@ public interface ProductService {
 
     ProductResponseDto patchProduct(UUID id, ProductPatchDto dto);
 
+    void deleteProduct(UUID id);
+
 }

@@ -1,13 +1,26 @@
-import { useEffect } from "react";
+import './App.css'
+import Products from './pages/products'
+import { Routes, Route, Link } from 'react-router-dom'
 
-function App() {
-  useEffect(() => {
-    fetch("http://localhost:8080/test")
-      .then(res => res.text())
-      .then(data => console.log(data));
-  }, []);
+function Home() {
+  return (
+    <div>
+      <h1>TEST HOMEPAGE</h1>
 
-  return <h1>testing</h1>;
+      <Link to="/products">
+        PRODUCTS
+      </Link>
+    </div>
+  )
 }
 
-export default App;
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/products" element={<Products />} />
+    </Routes>
+  )
+}
+
+export default App
